@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import Logo from '../../component/logo/logo'
+import { register } from '../../redux/user.redux'
 import {
   List,
   InputItem,
@@ -8,7 +10,10 @@ import {
   Button,
   Radio
 } from 'antd-mobile'
-
+@connect(
+  state => state.user,
+  { register }
+)
 
 class Register extends Component {
   constructor (props) {
@@ -27,7 +32,7 @@ class Register extends Component {
     })
   }
   handleRegister() {
-    console.log(this.state)
+    this.props.register(this.state)
   }
   render () {
     const RadioItem = Radio.RadioItem
