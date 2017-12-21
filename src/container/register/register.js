@@ -14,8 +14,20 @@ class Register extends Component {
   constructor (props) {
     super(props)
     this.state = {
+      user: '',
+      pwd: '',
+      repeatpwd: '',
       type: 'Boy'
     }
+    this.handleRegister = this.handleRegister.bind(this)
+  }
+  handleChange (key, val) {
+    this.setState({
+      [key]: val
+    })
+  }
+  handleRegister() {
+    console.log(this.state)
   }
   render () {
     const RadioItem = Radio.RadioItem
@@ -25,21 +37,46 @@ class Register extends Component {
         <WingBlank>
           <List>
             <WhiteSpace />
-            <InputItem>用户名</InputItem>
+            <InputItem
+              onChange = {v => this.handleChange('user', v)}
+            >
+              用户名
+            </InputItem>
             <WhiteSpace />
-            <InputItem>密码</InputItem>
+            <InputItem
+              type="password"
+              onChange = {v => this.handleChange('pwd', v)}
+            >
+              密码
+            </InputItem>
             <WhiteSpace />
-            <InputItem>确认密码</InputItem>
+            <InputItem
+              type="password"
+              onChange = {v => this.handleChange('repeatpwd', v)}
+            >
+              确认密码
+            </InputItem>
             <WhiteSpace />
-            <RadioItem checked={this.state.type ==='Boy'}>
+            <RadioItem 
+              checked={this.state.type ==='Boy'}
+              onChange = {v => this.handleChange('type', 'Boy')}
+            >
               Boy
             </RadioItem>
-            <RadioItem checked={this.state.type ==='Girl'}>
+            <RadioItem 
+              checked={this.state.type ==='Girl'}
+              onChange = {v => this.handleChange('type', 'Girl')}
+            >
               Girl
             </RadioItem>
           </List>
           <WhiteSpace />
-          <Button type="primary">注册</Button>
+          <Button 
+            type="primary"
+            onClick={this.handleRegister}
+          >
+            注册
+          </Button>
         </WingBlank>
       </div>
     )
