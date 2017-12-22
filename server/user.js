@@ -1,5 +1,6 @@
 const express = require('express')
 const Router = express.Router()
+const utils = require('utility')
 const model = require('./db/model')
 const User = model.getModel('user')
 
@@ -32,7 +33,7 @@ Router.post('/register', function (req, res) {
     }
     User.create({
       user,
-      pwd,
+      pwd: md5Salt(pwd),
       type
     }, function (err, doc) {
       if (err) {
@@ -48,5 +49,10 @@ Router.post('/register', function (req, res) {
     })
   })
 })
+
+function md5Salt(pwd) {
+  const salt = 'water is a good boy%@@!#!@@$!@'
+  return utils.md5(utils.md5(pwd+salt))
+}
 
 module.exports = Router

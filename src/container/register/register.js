@@ -11,12 +11,14 @@ import {
   Button,
   Radio
 } from 'antd-mobile'
+
+// const alert = Modal.alert
+
 // connect包裹Register 返回高阶组件 传递state
 @connect(
   state => state.user,
   { register }
 )
-
 class Register extends Component {
   constructor (props) {
     super(props)
@@ -36,6 +38,17 @@ class Register extends Component {
   handleRegister() {
     this.props.register(this.state)
   }
+
+  // componentDidUpdate () {
+  //   if (this.props.msg === '用户名重复') {
+  //     alert('警告', this.props.msg, [
+  //       { text: '确定', onPress: () => console.log('ok') },
+  //     ])
+  //   } else {
+  //     return null
+  //   }
+  // }
+
   render () {
     const RadioItem = Radio.RadioItem
     return (
