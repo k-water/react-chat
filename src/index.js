@@ -9,7 +9,8 @@ import thunk from 'redux-thunk'
 import { Provider } from 'react-redux'
 import {
   BrowserRouter as Router,
-  Route
+  Route,
+  Switch
 } from 'react-router-dom'
 
 import reducers from './reducer'
@@ -19,6 +20,8 @@ import Login from './container/login/login'
 import Register from './container/register/register'
 
 import AuthRoute from './component/authroute/authroute'
+
+import BoyInfo from './container/boyinfo/boyinfo'
 
 const store = createStore(reducers, compose(
   // 开启redux调试
@@ -32,8 +35,11 @@ ReactDOM.render(
       <Router>
         <div>
           <AuthRoute></AuthRoute>
-          <Route path='/login' component={Login}></Route>
-          <Route path='/register' component={Register}></Route>
+          <Switch>
+            <Route path='/boyinfo' component={BoyInfo}></Route>
+            <Route path='/login' component={Login}></Route>
+            <Route path='/register' component={Register}></Route>
+          </Switch>
         </div>
       </Router>
     </Provider>
