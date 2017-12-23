@@ -5,8 +5,15 @@ import {
   TextareaItem,
   Button
 } from 'antd-mobile'
+import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom'
+import { update } from '../../redux/user.redux'
 import AvatarSelector from '../../component/avatar-selector/avatar-selector'
 
+@connect(
+  state => state.user,
+  { update }
+)
 class BoyInfo extends Component {
   constructor(props) {
     super(props)
@@ -23,8 +30,11 @@ class BoyInfo extends Component {
     })
   }
   render() {
+    const path = this.props.location.pathname
+    const redirect = this.props.redirectTo
     return (
       <div>
+        {redirect && redirect !== path ? <Redirect to={this.props.redirectTo} /> : null}
         <NavBar
           mode="dark"
         >
@@ -60,7 +70,12 @@ class BoyInfo extends Component {
           title='职位要求'
         >
         </TextareaItem>
-        <Button type="primary">
+        <Button 
+          type="primary"
+          onClick={() => {
+            this.props.update(this.state)
+          }}
+        >
           保存
         </Button>
       </div>

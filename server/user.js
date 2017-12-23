@@ -116,6 +116,26 @@ Router.post('/register', function (req, res) {
   })
 })
 
+Router.post('/update', function (req, res) {
+  const userid = req.cookies.userid
+  if (!userid) {
+    return res.json({
+      code: 1
+    })
+  }
+  const body = req.body
+  User.findByIdAndUpdate(userid, body, function (err, doc) {
+    const data = Object.assign({}, {
+      user: doc.user,
+      type: doc.type
+    }, body)
+    return res.json({
+      code: 0,
+      data
+    })
+  })
+})
+
 function md5Salt(pwd) {
   const salt = 'water is a good boy%@@!#!@@$!@'
   return utils.md5(utils.md5(pwd + salt))
