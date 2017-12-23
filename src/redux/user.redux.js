@@ -6,6 +6,7 @@ import {
 const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 const REGISTER_SUCCESS = 'REGISTER_SUCCESS'
 const ERRPR_MSG = 'ERROR_MSG'
+const LOAD_DATA = 'LOAD_DATA'
 
 // 初始化state
 const initState = {
@@ -34,6 +35,11 @@ export function user(state = initState, action) {
         msg: '',
         redirectTo: getRedirectPath(action.payload),
         isAuth: true,
+        ...action.payload
+      }
+    case LOAD_DATA: 
+      return {
+        ...state,
         ...action.payload
       }
     case ERRPR_MSG:
@@ -129,5 +135,12 @@ export function login({
           dispatch(errorMsg(res.data.msg))
         }
       })
+  }
+}
+
+export function loadData(userinfo) {
+  return {
+    type: LOAD_DATA,
+    payload: userinfo
   }
 }

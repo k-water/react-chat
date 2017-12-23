@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom'
 import Logo from '../../component/logo/logo'
 import { login } from '../../redux/user.redux'
 import {
@@ -22,6 +23,7 @@ class Login extends Component {
     }
     this.register = this.register.bind(this)
     this.handleChange = this.handleChange.bind(this)
+    this.handleLogin = this.handleLogin.bind(this)
   }
   handleChange (key, val) {
     this.setState({
@@ -38,6 +40,7 @@ class Login extends Component {
   render () {
     return (
       <div>
+        {this.props.redirectTo ? <Redirect to={this.props.redirectTo} /> : null}
         <Logo></Logo>
         <WingBlank>
           <List>
@@ -49,6 +52,7 @@ class Login extends Component {
             </InputItem>
             <WhiteSpace size="sm"></WhiteSpace>
             <InputItem
+              type="password"
               onChange = {v => this.handleChange('pwd', v)}
             >
               密码
