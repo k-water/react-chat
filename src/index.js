@@ -22,6 +22,7 @@ import Register from './container/register/register'
 import AuthRoute from './component/authroute/authroute'
 
 import BoyInfo from './container/boyinfo/boyinfo'
+import GirlInfo from './container/girlinfo/girlinfo'
 
 const store = createStore(reducers, compose(
   // 开启redux调试
@@ -37,6 +38,7 @@ ReactDOM.render(
           <AuthRoute></AuthRoute>
           <Switch>
             <Route path='/boyinfo' component={BoyInfo}></Route>
+            <Route path='/girlinfo' component={GirlInfo}></Route>
             <Route path='/login' component={Login}></Route>
             <Route path='/register' component={Register}></Route>
           </Switch>

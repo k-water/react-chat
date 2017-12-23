@@ -44,7 +44,8 @@ export function user(state = initState, action) {
 
 // user 触发器
 
-function authSuccess(data) {
+function authSuccess(obj) {
+  const { pwd, ...data } = obj
   return {
     type: AUTH_SUCCESS,
     payload: data
