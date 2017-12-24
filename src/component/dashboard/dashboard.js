@@ -7,15 +7,12 @@ import { Switch, Route } from 'react-router-dom'
 import NavLinkBar from '../navlink/navlink'
 import Boy from '../boy/boy'
 import Girl from '../girl/girl'
+import User from '../user/user'
 
 function mapStateToProps(state) {
   return {
     user: state.user
   }
-}
-
-function Boss() {
-  return <h2>Boy首页</h2>
 }
 
 function Msg() {
@@ -55,7 +52,7 @@ class DashBoard extends Component {
         text: '我',
         icon: 'user',
         title: '个人中心',
-        component: Boss
+        component: User
       }
     ]
     return (

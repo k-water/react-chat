@@ -6,6 +6,7 @@ import {
 const AUTH_SUCCESS = 'AUTH_SUCCESS'
 const ERRPR_MSG = 'ERROR_MSG'
 const LOAD_DATA = 'LOAD_DATA'
+const LOGOUT = 'LOGOUT'
 
 // 初始化state
 const initState = {
@@ -30,6 +31,11 @@ export function user(state = initState, action) {
       return {
         ...state,
         ...action.payload
+      }
+    case LOGOUT:
+      return {
+        ...initState,
+        redirectTo: '/login'
       }
     case ERRPR_MSG:
       return {
@@ -143,5 +149,11 @@ export function update(data) {
       .catch(err => {
 
       })
+  }
+}
+
+export function logoutSubmit() {
+  return {
+    type: LOGOUT
   }
 }
