@@ -38,6 +38,7 @@ Router.get('/info', function (req, res) {
 
 Router.get('/list', function (req, res) {
   const { type } = req.query
+  // const query = type !== '' ? { type } : null
   User.find({type}, function (err, doc) {
     return res.json({
       code: 0,

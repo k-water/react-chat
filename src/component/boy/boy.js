@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import axios from 'axios'
+import { getUserList } from '../../redux/chatuser.redux'
 import { 
   Card,
   WhiteSpace,
@@ -9,7 +9,7 @@ import {
 
 function mapStateToProps(state) {
   return {
-
+    chatUser: state.chatUser
   }
 }
 
@@ -22,14 +22,7 @@ class Boy extends Component {
   }
   
   componentDidMount() {
-    axios.get('/user/list?type=Girl')
-      .then(res => {
-        if (res.data.code === 0) {
-          this.setState({
-            data: res.data.data
-          })
-        }
-      })
+    this.props.getUserList('Girl')
   }
   render() {
     const Header = Card.Header
@@ -38,7 +31,7 @@ class Boy extends Component {
       <div>
         <WingBlank>
           <WhiteSpace></WhiteSpace>
-          {this.state.data.map(v => (
+          {this.props.chatUser.userList.map(v => (
             v.avatar ?
             (<Card key={v._id}>
               <Header
@@ -64,4 +57,5 @@ class Boy extends Component {
 
 export default connect(
   mapStateToProps,
+  { getUserList }
 )(Boy)
