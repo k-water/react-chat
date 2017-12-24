@@ -1,3 +1,4 @@
+import './index.css'
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { 
@@ -24,6 +25,8 @@ import AuthRoute from './component/authroute/authroute'
 import BoyInfo from './container/boyinfo/boyinfo'
 import GirlInfo from './container/girlinfo/girlinfo'
 
+import DashBoard from './component/dashboard/dashboard'
+
 const store = createStore(reducers, compose(
   // 开启redux调试
   applyMiddleware(thunk),
@@ -41,6 +44,7 @@ ReactDOM.render(
             <Route path='/girlinfo' component={GirlInfo}></Route>
             <Route path='/login' component={Login}></Route>
             <Route path='/register' component={Register}></Route>
+            <Route component={DashBoard}></Route>
           </Switch>
         </div>
       </Router>
