@@ -6,6 +6,7 @@ import {
 import { Switch, Route } from 'react-router-dom'
 import NavLinkBar from '../navlink/navlink'
 import Boy from '../boy/boy'
+import Girl from '../girl/girl'
 
 function mapStateToProps(state) {
   return {
@@ -39,7 +40,7 @@ class DashBoard extends Component {
         text: 'boy',
         icon: 'job',
         title: 'Boy List',
-        component: Boss,
+        component: Girl,
         hide: user.type === 'Boy'
       },
       {
