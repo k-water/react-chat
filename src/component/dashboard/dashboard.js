@@ -3,7 +3,9 @@ import { connect } from 'react-redux'
 import {
   NavBar
 } from 'antd-mobile'
+import { Switch, Route } from 'react-router-dom'
 import NavLinkBar from '../navlink/navlink'
+import Boy from '../boy/boy'
 
 function mapStateToProps(state) {
   return {
@@ -15,6 +17,9 @@ function Boss() {
   return <h2>Boy首页</h2>
 }
 
+function Msg() {
+  return <h2>Msg首页</h2>
+}
 class DashBoard extends Component {
   render() {
     const user = this.props.user
@@ -26,7 +31,7 @@ class DashBoard extends Component {
         text: 'Girl',
         icon: 'boss',
         title: 'Girl List',
-        component: Boss,
+        component: Boy,
         hide: user.type === 'Girl'
       },
       {
@@ -42,7 +47,7 @@ class DashBoard extends Component {
         text: '消息',
         icon: 'msg',
         title: '消息列表',
-        component: Boss
+        component: Msg
       },
       {
         path: '/me',
@@ -56,10 +61,18 @@ class DashBoard extends Component {
       <div>
         <NavBar
           mode='dard'
+          className='fixed-header'
         >
           {navList.find(v => v.path === pathname).title}
         </NavBar>
-
+        <div style={{marginTop: 45}}>
+          <Switch>
+            {navList.map(v => (
+              <Route key={v.path} path={v.path} component={v.component}>
+              </Route>
+            ))}
+          </Switch>
+        </div>
         <NavLinkBar
           data={navList}
         >
