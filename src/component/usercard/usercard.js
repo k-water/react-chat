@@ -22,7 +22,7 @@ class UserCard extends Component {
             v.avatar ?
             (<Card 
               key={v._id}
-              onClick={() => this.props.history.push(`/chat/${v.user}`)}
+              onClick={() => this.props.history.push(`/chat/${v._id}`)}
             >
               <Header
                 title={v.user}
