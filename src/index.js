@@ -38,6 +38,7 @@ ReactDOM.render(
     <Provider store={store}>
       <Router>
         <div>
+          {/* 获取用户信息 进行权限认证 */}
           <AuthRoute></AuthRoute>
           <Switch>
             <Route path='/boyinfo' component={BoyInfo}></Route>
