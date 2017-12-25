@@ -5,7 +5,8 @@ import {
   WhiteSpace,
   WingBlank
 } from 'antd-mobile'
-
+import { withRouter } from 'react-router-dom'
+@withRouter
 class UserCard extends Component {
   static propTypes = {
     userList: PropTypes.array.isRequired
@@ -19,7 +20,10 @@ class UserCard extends Component {
           <WhiteSpace></WhiteSpace>
           {this.props.userList.map(v => (
             v.avatar ?
-            (<Card key={v._id}>
+            (<Card 
+              key={v._id}
+              onClick={() => this.props.history.push(`/chat/${v.user}`)}
+            >
               <Header
                 title={v.user}
                 thumb={require(`../img/${v.avatar}.png`)}

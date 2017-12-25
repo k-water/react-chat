@@ -26,6 +26,7 @@ import BoyInfo from './container/boyinfo/boyinfo'
 import GirlInfo from './container/girlinfo/girlinfo'
 
 import DashBoard from './component/dashboard/dashboard'
+import Chat from './component/chat/chat'
 
 const store = createStore(reducers, compose(
   // 开启redux调试
@@ -45,6 +46,7 @@ ReactDOM.render(
             <Route path='/girlinfo' component={GirlInfo}></Route>
             <Route path='/login' component={Login}></Route>
             <Route path='/register' component={Register}></Route>
+            <Route path='/chat/:user' component={Chat}></Route>
             <Route component={DashBoard}></Route>
           </Switch>
         </div>
