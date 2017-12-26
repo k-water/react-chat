@@ -37,9 +37,13 @@ Router.get('/info', function (req, res) {
 })
 
 Router.get('/list', function (req, res) {
-  const { type } = req.query
+  const {
+    type
+  } = req.query
   // const query = type !== '' ? { type } : null
-  User.find({type}, function (err, doc) {
+  User.find({
+    type
+  }, function (err, doc) {
     return res.json({
       code: 0,
       data: doc
@@ -138,16 +142,31 @@ Router.post('/update', function (req, res) {
   })
 })
 
-Router.get('/getmsglist', function(req, res) {
-  const user = req.cookies.user
-  // '$or': [{from: user, to: user}]
-  Chat.find({}, function(err, doc) {
-    if (!err) {
-      return res.json({
-        code: 0,
-        msgs: doc
-      })
-    }
+Router.get('/getmsglist', function (req, res) {
+  const user = req.cookies.userid
+  User.find({}, function (err, doc) {
+    let users = {}
+    doc.forEach(v => {
+      users[v._id] = {
+        name: v.user,
+        avatar: v.avatar
+      }
+    })
+    Chat.find({
+      '$or': [{
+        from: user
+      }, {
+        to: user
+      }]
+    }, function (err, doc) {
+      if (!err) {
+        return res.json({
+          code: 0,
+          msgs: doc,
+          users: users
+        })
+      }
+    })
   })
 })
 

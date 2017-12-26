@@ -2,13 +2,15 @@ import React, { Component } from 'react'
 import {
   List,
   InputItem,
-  NavBar
+  NavBar,
+  Icon
 } from 'antd-mobile'
 import { connect } from 'react-redux'
-import { sendMsg } from '../../redux/chat.redux'
+import { getMsgList, sendMsg, recvMsg } from '../../redux/chat.redux'
+import { setTimeout } from 'timers';
 @connect(
   state => state,
-  { sendMsg }
+  { getMsgList, sendMsg, recvMsg }
 )
 class Chat extends Component {
   constructor(props) {
@@ -16,6 +18,15 @@ class Chat extends Component {
     this.state = {
       text: '',
       msg: []
+    }
+  }
+  componentWillMount() {
+
+    if (!this.props.chat.chatmsg.length) {
+      // 获取聊天列表
+      this.props.getMsgList()
+      // 监听收到的消息
+      this.props.recvMsg()
     }
   }
   componentDidMount() {
@@ -31,23 +42,39 @@ class Chat extends Component {
     })
   }
   render() {
-    const user = this.props.match.params.user
+    const userid = this.props.match.params.user
     const Item = List.Item
+    const users = this.props.chat.users
+    if(!users) {
+      return null
+    }
     return (
       <div id='chat-page'>
-        <NavBar mode='dark'>
-          {user}
+        <NavBar 
+          mode='dark'
+          icon={<Icon type="left" />}
+          onLeftClick={() => {
+            this.props.history.goBack()
+          }}
+        >
+          {/* {users[userid].name} */}
+          {userid}
         </NavBar>
         {this.props.chat.chatmsg.map(v => {
-          return v.from === user ? (
+          const avatar = require(`../img/${users[v.from].avatar}.png`)
+          return v.from === userid ? (
             <List key={v._id}>
-                <Item>{v.content}</Item>
+                <Item
+                  thumb={avatar}
+                >
+                  {v.content}
+                </Item>
             </List>
           ): (
             <List key={v._id}>
               <Item 
                 className='chat-me'
-                extra={'avatar'}
+                extra={<img src={avatar} alt="" />}
               >
                 {v.content}
               </Item>
