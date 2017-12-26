@@ -32,7 +32,7 @@ class UserCard extends Component {
               </Header>
               <Body>
                 {v.desc.split('\n').map(desc => (
-                  <div key={desc}>
+                  <div key={desc+Math.random()}>
                     {desc}
                   </div>
                 ))}

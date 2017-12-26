@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
 import {
   List,
-  InputItem
+  InputItem,
+  NavBar
 } from 'antd-mobile'
 import { connect } from 'react-redux'
-import { getMsgList, sendMsg, recvMsg } from '../../redux/chat.redux'
+import { sendMsg } from '../../redux/chat.redux'
 @connect(
   state => state,
-  { getMsgList, sendMsg, recvMsg }
+  { sendMsg }
 )
 class Chat extends Component {
   constructor(props) {
@@ -18,10 +19,7 @@ class Chat extends Component {
     }
   }
   componentDidMount() {
-    // 获取聊天列表
-    this.props.getMsgList()
-    // 监听收到的消息
-    this.props.recvMsg()
+
   }
   handleSubmit() {
     const from = this.props.user._id
@@ -33,11 +31,30 @@ class Chat extends Component {
     })
   }
   render() {
+    const user = this.props.match.params.user
+    const Item = List.Item
     return (
-      <div>
-        {this.state.msg.map(v => {
-          return <p key={v}>{v}</p>
+      <div id='chat-page'>
+        <NavBar mode='dark'>
+          {user}
+        </NavBar>
+        {this.props.chat.chatmsg.map(v => {
+          return v.from === user ? (
+            <List key={v._id}>
+                <Item>{v.content}</Item>
+            </List>
+          ): (
+            <List key={v._id}>
+              <Item 
+                className='chat-me'
+                extra={'avatar'}
+              >
+                {v.content}
+              </Item>
+            </List>           
+          )
         })}
+
         <div className="stick-footer">
           <List>
             <InputItem

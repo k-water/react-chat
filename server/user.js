@@ -4,7 +4,6 @@ const utils = require('utility')
 const model = require('./db/model')
 const User = model.getModel('user')
 const Chat = model.getModel('chat')
-
 const _filter = {
   'pwd': 0,
   '__v': 0

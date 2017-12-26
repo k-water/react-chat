@@ -8,17 +8,22 @@ import NavLinkBar from '../navlink/navlink'
 import Boy from '../boy/boy'
 import Girl from '../girl/girl'
 import User from '../user/user'
-
-function mapStateToProps(state) {
-  return {
-    user: state.user
-  }
-}
+import { getMsgList, recvMsg } from '../../redux/chat.redux'
 
 function Msg() {
   return <h2>Msg首页</h2>
 }
+@connect(
+  state => state,
+  { getMsgList, recvMsg }
+)
 class DashBoard extends Component {
+  componentDidMount() {
+    // 获取聊天列表
+    this.props.getMsgList()
+    // 监听收到的消息
+    this.props.recvMsg()
+  }
   render() {
     const user = this.props.user
     const { pathname } = this.props.location
@@ -80,6 +85,4 @@ class DashBoard extends Component {
   }
 }
 
-export default connect(
-  mapStateToProps,
-)(DashBoard)
+export default DashBoard

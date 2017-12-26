@@ -48,7 +48,7 @@ class User extends Component {
             multipleLine
           >
             {props.title}
-            {props.desc.split('\n').map(v => <Brief key={v}>{v}</Brief>)}
+            {props.desc.split('\n').map(v => <Brief key={v+Math.random()}>{v}</Brief>)}
           </Item>
         </List>
         <WhiteSpace></WhiteSpace>
