@@ -21,7 +21,7 @@ class Chat extends Component {
     }
   }
 
-  componentDidMount() {
+  componentWillMount() {
     if (!this.props.chat.chatmsg.length) {
       // 获取聊天列表
       this.props.getMsgList()
@@ -31,7 +31,6 @@ class Chat extends Component {
   }
   handleSubmit() {
     const from = this.props.user._id
-    console.log(from)
     const to = this.props.match.params.user
     const msg = this.state.text
     this.props.sendMsg({from, to, msg})

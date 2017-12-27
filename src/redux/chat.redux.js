@@ -25,10 +25,11 @@ export function chat(state = initState, action) {
         unread: action.payload.msgs.filter(v => !v.read && v.to === action.payload.userid).length
       }
     case MSG_RECV:
+      const n = action.payload.msgs.to === action.payload.userid ? 1 : 0
       return {
         ...state,
-        chatmsg: [...state.chatmsg, action.payload],
-        unread: state.unread + 1
+        chatmsg: [...state.chatmsg, action.payload.msgs],
+        unread: state.unread + n
       }
       // case MSG_READ:
     default:
@@ -47,19 +48,22 @@ function msgList(msgs, users, userid) {
   }
 }
 
-function msgRecv(msgs) {
+function msgRecv(msgs, userid) {
   return {
     type: MSG_RECV,
-    payload: msgs
+    payload: {
+      msgs,
+      userid
+    }
   }
 }
 
 // 监听收到的消息
 export function recvMsg() {
-  return dispatch => {
+  return (dispatch, getState) => {
     socket.on('recvmsg', function (data) {
-      // console.log('recvmsg', data)
-      dispatch(msgRecv(data))
+      const userid = getState().user._id
+      dispatch(msgRecv(data, userid))
     })
   }
 }
