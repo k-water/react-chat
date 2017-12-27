@@ -18,11 +18,13 @@ function Msg() {
   { getMsgList, recvMsg }
 )
 class DashBoard extends Component {
-  componentDidMount() {
-    // 获取聊天列表
-    this.props.getMsgList()
-    // 监听收到的消息
-    this.props.recvMsg()
+  componentWillMount() {
+    if (!this.props.chat.chatmsg.length) {
+      // 获取聊天列表
+      this.props.getMsgList()
+      // 监听收到的消息
+      this.props.recvMsg()
+    }
   }
   render() {
     const user = this.props.user

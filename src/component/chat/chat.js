@@ -7,7 +7,7 @@ import {
 } from 'antd-mobile'
 import { connect } from 'react-redux'
 import { getMsgList, sendMsg, recvMsg } from '../../redux/chat.redux'
-import { setTimeout } from 'timers';
+import { getChatId } from '../../util'
 @connect(
   state => state,
   { getMsgList, sendMsg, recvMsg }
@@ -20,8 +20,8 @@ class Chat extends Component {
       msg: []
     }
   }
-  componentWillMount() {
 
+  componentDidMount() {
     if (!this.props.chat.chatmsg.length) {
       // 获取聊天列表
       this.props.getMsgList()
@@ -29,11 +29,9 @@ class Chat extends Component {
       this.props.recvMsg()
     }
   }
-  componentDidMount() {
-
-  }
   handleSubmit() {
     const from = this.props.user._id
+    console.log(from)
     const to = this.props.match.params.user
     const msg = this.state.text
     this.props.sendMsg({from, to, msg})
@@ -41,13 +39,17 @@ class Chat extends Component {
       text: ''
     })
   }
+
   render() {
     const userid = this.props.match.params.user
     const Item = List.Item
     const users = this.props.chat.users
-    if(!users) {
+    // 若没有获取到users 返回null
+    if (!users[userid]) {
       return null
     }
+    const chatid = getChatId(userid, this.props.user._id)
+    const chatmsgs = this.props.chat.chatmsg.filter(v => v.chatid === chatid)
     return (
       <div id='chat-page'>
         <NavBar 
@@ -57,21 +59,20 @@ class Chat extends Component {
             this.props.history.goBack()
           }}
         >
-          {/* {users[userid].name} */}
-          {userid}
+          {users[userid].name}
         </NavBar>
-        {this.props.chat.chatmsg.map(v => {
+        {chatmsgs.map(v => {
           const avatar = require(`../img/${users[v.from].avatar}.png`)
           return v.from === userid ? (
-            <List key={v._id}>
+            <List key={v._id+Math.random()}>
                 <Item
                   thumb={avatar}
                 >
                   {v.content}
                 </Item>
             </List>
-          ): (
-            <List key={v._id}>
+          ) : (
+            <List key={v._id+Math.random()}>
               <Item 
                 className='chat-me'
                 extra={<img src={avatar} alt="" />}
