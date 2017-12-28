@@ -34,3 +34,10 @@
 	bottom: 0;
 	width: 100%;
 }
+
+.send {
+	cursor: pointer;
+	display: inline-block;
+	line-height: 150%;
+	z-index: 10;
+}

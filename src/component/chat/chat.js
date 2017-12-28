@@ -107,7 +107,7 @@ class Chat extends Component {
                 })
               }}
               extra={
-                <div>
+                <div style={{cursor:'pointer'}}>
                   <span
                     role="img"
                     aria-label="smile"
@@ -122,6 +122,7 @@ class Chat extends Component {
                     😁
                   </span>
                   <span
+                    className='send'
                     onClick={() => this.handleSubmit()}
                   >
                     发送

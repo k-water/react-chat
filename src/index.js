@@ -1,6 +1,6 @@
 import './index.css'
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react'
+import ReactDOM from 'react-dom'
 import { 
   createStore, 
   applyMiddleware, 
@@ -27,7 +27,8 @@ import GirlInfo from './container/girlinfo/girlinfo'
 
 import DashBoard from './component/dashboard/dashboard'
 import Chat from './component/chat/chat'
-
+import initReactFastclick from 'react-fastclick'
+initReactFastclick()
 const store = createStore(reducers, compose(
   // 开启redux调试
   applyMiddleware(thunk),
