@@ -8,11 +8,8 @@ import NavLinkBar from '../navlink/navlink'
 import Boy from '../boy/boy'
 import Girl from '../girl/girl'
 import User from '../user/user'
+import Msg from '../msg/msg'
 import { getMsgList, recvMsg } from '../../redux/chat.redux'
-
-function Msg() {
-  return <h2>Msg首页</h2>
-}
 @connect(
   state => state,
   { getMsgList, recvMsg }
