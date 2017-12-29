@@ -7,11 +7,11 @@ import {
   Grid
 } from 'antd-mobile'
 import { connect } from 'react-redux'
-import { getMsgList, sendMsg, recvMsg } from '../../redux/chat.redux'
+import { getMsgList, sendMsg, recvMsg, readMsg } from '../../redux/chat.redux'
 import { getChatId } from '../../util'
 @connect(
   state => state,
-  { getMsgList, sendMsg, recvMsg }
+  { getMsgList, sendMsg, recvMsg, readMsg }
 )
 class Chat extends Component {
   constructor(props) {
@@ -29,10 +29,18 @@ class Chat extends Component {
       // 监听收到的消息
       this.props.recvMsg()
     }
+
     // 解决Grid刷新布局问题 emoji
     setTimeout(function() {
       window.dispatchEvent(new Event('resize'))
     }, 0)
+  }
+  // 组件移除时触发
+  // 在ReactRoutev4中 每个路由都是一个组件
+  componentWillUnmount() {
+    // 设置已读消息
+    const to = this.props.match.params.user
+    this.props.readMsg(to)
   }
   handleSubmit() {
     const from = this.props.user._id

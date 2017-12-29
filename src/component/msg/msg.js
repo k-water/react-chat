@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
-  List
+  List,
+  Badge
 } from 'antd-mobile'
 
 @connect(
@@ -22,22 +23,33 @@ class Msg extends Component {
       msgGroup[v.chatid] = msgGroup[v.chatid] || []
       msgGroup[v.chatid].push(v)
     })
-    const chatList = Object.values(msgGroup)
+    const chatList = Object.values(msgGroup).sort((a, b) => {
+      const a_last = this.getLastInfo(a).create_time
+      const b_last = this.getLastInfo(b).create_time
+      return b_last - a_last
+    })
     return (
       <div>
         {chatList.map(v => {
           const lastItem = this.getLastInfo(v)
           const targetId = v[0].from === userid ? v[0].to : v[0].from
-          const name = userinfo[targetId] && userinfo[targetId].name
-          const avatar = userinfo[targetId] && userinfo[targetId].avatar
+          if(!userinfo[targetId]) {
+            return null
+          }
+          const unreadNum = v.filter(v => !v.read && v.to === userid).length
           return (
             <List key={lastItem._id}>
               <Item
-                thumb={require(`../img/${avatar}.png`)}
+                extra = {<Badge text={unreadNum}></Badge>}
+                thumb={require(`../img/${userinfo[targetId].avatar}.png`)}
+                arrow="horizontal"
+                onClick={() => {
+                  this.props.history.push(`/chat/${targetId}`)
+                }}
               >
                 {lastItem.content}
                 <Brief>
-                  {name}
+                  {userinfo[targetId].name}
                 </Brief>
               </Item>
             </List>

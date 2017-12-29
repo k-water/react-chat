@@ -165,7 +165,45 @@ Router.get('/getmsglist', function (req, res) {
           msgs: doc,
           users: users
         })
+      } else {
+        return res.json({
+          code: 1,
+          msg: err
+        })
       }
+    })
+  })
+})
+
+Router.post('/readmsg', function (req, res) {
+  const userid = req.cookies.userid
+  const {
+    from
+  } = req.body
+  // console.log(userid, from)
+  // from 我发给对方消息的ID
+  // to 我自己的ID
+  Chat.update({
+    from,
+    to: userid
+  }, {
+    '$set': {
+      read: true
+    }
+  }, {
+    'multi': true
+  }, function (err, doc) {
+    // console.log(doc)
+    if (!err) {
+      return res.json({
+        code: 0,
+        num: doc.nModified,
+        msg: '修改成功'
+      })
+    }
+    return res.json({
+      code: 1,
+      msg: err
     })
   })
 })
